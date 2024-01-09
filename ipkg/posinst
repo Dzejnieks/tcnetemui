@@ -46,3 +46,4 @@ EOF
 
 # Make the new WPS script executable
 chmod +x "$WPS_SCRIPT_PATH"
+
