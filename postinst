@@ -5,7 +5,7 @@ WPS_SCRIPT_PATH="/etc/rc.button/wps"
 
 # Backup the existing WPS script, if it exists
 [ -f "$WPS_SCRIPT_PATH" ] && mv "$WPS_SCRIPT_PATH" "${WPS_SCRIPT_PATH}.backup"
-
+echo "in postinst"
 # Create the new WPS script
 cat << "EOF" > "$WPS_SCRIPT_PATH"
 #!/bin/sh
@@ -43,3 +43,6 @@ if [ "$ACTION" = "released" ] && [ "$BUTTON" = "wps" ]; then
     fi
 fi
 EOF
+
+# Make the new WPS script executable
+chmod +x "$WPS_SCRIPT_PATH"
