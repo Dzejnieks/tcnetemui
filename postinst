@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Path to the WPS script
+WPS_SCRIPT_PATH="/etc/rc.button/wps"
+
+# Backup the existing WPS script, if it exists
+[ -f "$WPS_SCRIPT_PATH" ] && mv "$WPS_SCRIPT_PATH" "${WPS_SCRIPT_PATH}.backup"
+
+# Create the new WPS script
+cat << "EOF" > "$WPS_SCRIPT_PATH"
+#!/bin/sh
+
 wan_ifname=$(uci get network.wan.ifname)
 lan_ifname=$(uci get network.lan.ifname)
 
@@ -32,3 +42,7 @@ if [ "$ACTION" = "released" ] && [ "$BUTTON" = "wps" ]; then
         [ $wps_done = 1 ] || wps_catch_credentials &
     fi
 fi
+EOF
+
+# Make the new WPS script executable
+chmod +x "$WPS_SCRIPT_PATH"
